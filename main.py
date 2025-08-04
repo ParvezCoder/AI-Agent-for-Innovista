@@ -38,7 +38,7 @@ InnovistaCare = Agent(
 
 
 # Streamlit App
-st.title("📡 Innovista AI Smart Agent")
+st.title("📡 Innovista AI Smart Agent...")
 
 st.markdown("""
 ###
