@@ -586,6 +586,7 @@ dependencies = [
     { name = "chainlit" },
     { name = "dotenv" },
     { name = "openai-agents" },
+    { name = "python-dotenv" },
     { name = "streamlit" },
 ]
 
@@ -594,6 +595,7 @@ requires-dist = [
     { name = "chainlit", specifier = ">=2.6.2" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "openai-agents", specifier = ">=0.2.3" },
+    { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "streamlit", specifier = ">=1.47.0" },
 ]
 
