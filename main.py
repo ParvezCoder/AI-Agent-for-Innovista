@@ -5,10 +5,8 @@ from agents import Agent, Runner, OpenAIChatCompletionsModel, set_tracing_disabl
 from dotenv import load_dotenv
 import os
 from openai import AsyncOpenAI 
-# from whatsapp_sender import send_whatsapp_message
 import asyncio
 from get_data import get_all_complaints_data
-
 
 from post_data import post_all_complaints_from_sheet
 from instructions import complain_agent_instructions

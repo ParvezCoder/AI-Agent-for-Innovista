@@ -9,7 +9,7 @@ def get_all_complaints_data() -> list:
     Retrieves all complaints from the Google Sheet and returns them as a list of dictionaries.
     Each dictionary contains: name, complaint_type, complaint_detail.
     """
-    sheet_url = "https://docs.google.com/spreadsheets/d/1-FK2G6bdCs7rnA47AwJSN4n1keQv3LZ9haB70m_9Hl4/export?format=csv&gid=0"
+    sheet_url = "https://docs.google.com/spreadsheets/d/1IfvKV6hyDZCa7gLxHJGDDdJAkeiDI3xmpM19yz27Stc/export?format=csv&gid=0"
     
     # if admin_pin != "0000":
     #     return [{"error": "Access Denied. Valid admin PIN required."}]
