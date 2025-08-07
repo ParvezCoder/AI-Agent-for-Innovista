@@ -189,7 +189,7 @@ if st.button("📨 Submit Complaint"):
         )
         prompt = ""
         st.session_state.history.append({"role": "assistant", "content": result.final_output})
-        st.success("Reply from Complaint Assistant:")
+        # st.success("Reply from Complaint Assistant:")
         st.markdown(f"""
     <div class="agent-reply">
         🤖 {result.final_output}
