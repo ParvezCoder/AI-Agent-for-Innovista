@@ -8,9 +8,7 @@ from openai import AsyncOpenAI
 import asyncio
 from get_data import get_all_complaints_data
 
-from post_data import post_all_complaints_from_sheet
 from instructions import complain_agent_instructions
-from whatsapp_sender import send_complaint_to_staff
 import base64
 import streamlit.components.v1 as components
 
@@ -50,7 +48,7 @@ InnovistaCare = Agent(
     name="Innovista Complaints Handle Agent",
     instructions=complain_agent_instructions,
     model=model,
-    tools=[post_all_complaints_from_sheet,get_all_complaints_data,send_complaint_to_staff],
+    tools=[get_all_complaints_data]
 )
 st.markdown(
     f"""
@@ -168,12 +166,112 @@ with left_col:
     </div>
     """, unsafe_allow_html=True)
 
+# Form fields
+import requests
+
+# Custom CSS for form fields and labels
+st.markdown("""
+<style>
+    /* Input, dropdown, textarea background black, text white */
+    .stTextInput input, .stSelectbox div[data-baseweb="select"], .stTextArea textarea {
+        background-color: black !important;
+        color: white !important;
+        border: 1px solid white !important;
+    }
+    /* Placeholder text white */
+    .stTextInput input::placeholder, .stTextArea textarea::placeholder {
+        color: white !important;
+        opacity: 0.7;
+    }
+    /* Dropdown text white */
+    div[data-baseweb="select"] span {
+        color: white !important;
+    }
+    /* Labels white */
+    label, .stSelectbox label, .stTextArea label {
+        color: white !important;
+        font-weight: 600 !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+with left_col:
+    # Initialize session_state for form fields
+    if "form_data" not in st.session_state:
+        st.session_state.form_data = {
+            "name": "",
+            "company_name": "Select Company Name",
+            "phone": "",
+            "complaint_type": "Select Complaint Type",
+            "description": ""
+        }
+
+    with st.form("complaint_form"):
+        name = st.text_input("👤 Your Name", value=st.session_state.form_data["name"], placeholder="Enter your name")
+        company_name = st.selectbox("🏢 Company Name or Location", ["Select Company Name","Innovista","Digilyzr","Viper","Telec"], 
+                                    index=["Select Company Name","Innovista","Digilyzr","Viper","Telec"].index(st.session_state.form_data["company_name"]))
+
+        phone = st.text_input("📞 Phone Number", value=st.session_state.form_data["phone"], placeholder="Enter phone number")
+        
+        # Dropdown for complaint type
+        complaint_types = [
+            "Select Complaint Type",
+            "AC Issue",
+            "WiFi Problem",
+            "Noise",
+            "Billing",
+            "Other"
+        ]
+        complaint_type = st.selectbox(
+            "📌 Type of Complaint",
+            complaint_types,
+            index=complaint_types.index(st.session_state.form_data["complaint_type"]) if st.session_state.form_data["complaint_type"] in complaint_types else 0
+        )
+
+        description = st.text_area("📝 Description of the Issue", value=st.session_state.form_data["description"], placeholder="Write your complaint details here...")
+        
+        submitted = st.form_submit_button("📨 Submit Complaint")
+
+        if submitted:
+            if not name or not company_name or not phone or complaint_type == "Select Complaint Type" or not description:
+                st.error("⚠️ Please fill in all the fields.")
+            else:
+                payload = {
+                    "name": name,
+                    "company_name": company_name,
+                    "phone": phone,
+                    "complaint_type": complaint_type,
+                    "description": description,
+                    "status": "Pending"
+                }
+                url = "https://script.google.com/macros/s/AKfycbxv9tBKo1C8oBOS8A5EnIkFF642weWjL7KFbMxbbmZVoEhwi6NQuMnT1-eFXPJmklbpFQ/exec"
+                try:
+                    res = requests.post(url, json=payload)
+                    if res.status_code == 200:
+                        st.success("✅ Complaint successfully submitted!")
+                        # Reset form fields
+                        st.session_state.form_data = {
+                            "name": "",
+                            "company_name": "Select Company Name",
+                            "phone": "",
+                            "complaint_type": "Select Complaint Type",
+                            "description": ""
+                        }
+            
+                    else:
+                        st.error(f"❌ Failed to submit complaint. Status: {res.status_code}")
+                except Exception as e:
+                    st.error(f"🚨 Error: {e}")
+
+
+
+
     # This is now inside left_col ✅
-    prompt = st.text_area("📝 Enter Complaint Details:")
+    prompt = st.text_area("📝 Chat Us..:")
 if "history" not in st.session_state:
     st.session_state.history = []
 
-if st.button("📨 Submit Complaint"):
+if st.button("📨 Chat Us"):
     with st.spinner("Submitting your complaint, please wait..."):
         st.session_state.history.append({"role": "user", "content": prompt})
 
