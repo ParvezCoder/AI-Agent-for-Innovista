@@ -1,5 +1,5 @@
 import streamlit as st
-# Set the UI
+# Set the UI.
 st.set_page_config(page_title="Innovista Complaint AI Agent", layout="wide")
 from agents import Agent, Runner, OpenAIChatCompletionsModel, set_tracing_disabled
 from dotenv import load_dotenv
