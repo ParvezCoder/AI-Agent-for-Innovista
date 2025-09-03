@@ -1,5 +1,4 @@
 import streamlit as st
-st.set_page_config(page_title="Innovista Complaint AI Agent", layout="wide")
 from agents import Agent, Runner, OpenAIChatCompletionsModel, set_tracing_disabled
 from dotenv import load_dotenv
 import os
@@ -198,6 +197,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.set_page_config(page_title="Innovista Complaint AI Agent", layout="wide")
 
 left_col, right_col = st.columns([2, 1])  # 2:1 ratio (left:right)
 
