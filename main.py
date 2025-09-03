@@ -219,10 +219,10 @@ with left_col:
     # Row 3: Company + Complaint Type
     col3, col4 = st.columns(2)
     with col3:
-      company = st.selectbox("Company Name", options=["Select Company name","CloudLead", "Viper", "ReXon Solution","other"])
+      company = st.selectbox("", options=["Select Company ","CloudLead", "Viper", "ReXon Solution","other"])
 
     with col4:
-        complaint_type = st.selectbox("Complaint Type", ["select complaint type","Internet Issue", "Cleaning Issue", "Technical", "Eletric issue", "other"])
+        complaint_type = st.selectbox("", [" complaint type","Internet Issue", "Cleaning Issue", "Technical", "Eletric issue", "other"])
 
     # Complaint details (textarea)
     prompt = st.text_area("📝 Enter Complaint Details:" )
