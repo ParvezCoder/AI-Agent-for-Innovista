@@ -232,7 +232,7 @@ if "history" not in st.session_state:
 
 
 if st.button("📨 Submit Complaint"):
-    with st.spinner("Submitting your complaint, please wait..."):
+    with st.spinner("AI Agent working on Your Query"):
         st.session_state.history.append({"role": "user", "content": f"{prompt} {name} {contact} {company} {complaint_type}"  })
 
         try:
