@@ -215,17 +215,17 @@ with left_col:
         name = st.text_input("Name")
     with col2:
         contact = st.text_input("Contact")
-
+    
     # Row 3: Company + Complaint Type
     col3, col4 = st.columns(2)
     with col3:
-      company = st.selectbox("Company Name", options=["Company A", "Company B", "Company C"])
+      company = st.selectbox("Company Name", options=["Select Company name","CloudLead", "Viper", "ReXon Solution","other"])
 
     with col4:
-        complaint_type = st.selectbox("Complaint Type", ["Billing", "Service", "Technical", "Other"])
+        complaint_type = st.selectbox("Complaint Type", ["select complaint type","Internet Issue", "Cleaning Issue", "Technical", "Eletric issue", "other"])
 
     # Complaint details (textarea)
-    prompt = st.text_area("📝 Enter Complaint Details:")
+    prompt = st.text_area("📝 Enter Complaint Details:" )
 
 if "history" not in st.session_state:
     st.session_state.history = []
@@ -233,7 +233,7 @@ if "history" not in st.session_state:
 
 if st.button("📨 Submit Complaint"):
     with st.spinner("Submitting your complaint, please wait..."):
-        st.session_state.history.append({"role": "user", "content": prompt})
+        st.session_state.history.append({"role": "user", "content": f"{prompt} {name} {contact} {company} {complaint_type}"  })
 
         try:
             loop = asyncio.get_running_loop()
